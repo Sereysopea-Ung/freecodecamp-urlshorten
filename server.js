@@ -48,8 +48,9 @@ function findOneByShortUrl(url_number,done){
 
 function testValidUrl(url,done,invalid){
   let validUrlRegExp= /^https?:\/\/(w{3}.)?\w[\w-]*.[\w{2,}]+((\/\w+(-\w)*)*)?/;
-  if (validUrlRegExp.test(url) || /localhost:3000/.test(url)){
-    dns.lookup(url.replace(/^https?:\/\//,''), (err,add,fam)=>{
+  if (validUrlRegExp.test(url)){
+    replacedUrl= url.replace(/^https?:\/\//,'').replace(/\/([\w?=\/])*$/,'');
+    dns.lookup(replacedUrl, (err,add,fam)=>{
       if (err) return done(err);
       done(null,add);
     });
