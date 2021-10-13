@@ -47,14 +47,16 @@ function findOneByShortUrl(url_number,done){
 }
 
 function testValidUrl(url,done,invalid){
-  let validUrlRegExp= /^(https?:\/\/)?(w{3}.)?\w[\w-]*.[\w{2,}]+((\/\w+(-\w)*)*)?/;
+  let validUrlRegExp= /^https?:\/\/(w{3}.)?\w[\w-]*.[\w{2,}]+((\/\w+(-\w)*)*)?/;
   if (validUrlRegExp.test(url)){
     replacedUrl= url.replace(/^https?:\/\//,'').replace(/\/([\w?=\/])*$/,'');
+    console.log("Here1");
     dns.lookup(replacedUrl, (err,add,fam)=>{
       if (err) return done(err);
       done(null,add);
     });
   } else {
+    console.log('Here2');
     invalid();
   }
 }
